@@ -32,7 +32,7 @@ class OrderService {
           where: { userId: id, status: status },
         }),
         totalPages: Math.ceil(
-          (await prisma.order.count({ where: { userId: id } })) / limit,
+          (await prisma.order.count({ where: { userId: id, status: status } })) / limit,
         ),
       },
     };
