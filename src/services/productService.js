@@ -28,6 +28,13 @@ class ProductService {
 
     }
 
-} 
+    async getProductById(id){
+        const product = await prisma.product.findUnique({
+            where: {id}
+        })
+        return product
+
+    }
+}
 
 module.exports = new ProductService();

@@ -6,6 +6,7 @@ const ProductController = require('../controllers/productController');
 
 
 router.get('/', ensureAuth, ProductController.getAllProducts);
+router.get('/:id', ensureAuth, ProductController.getProductById);
 
 
 
