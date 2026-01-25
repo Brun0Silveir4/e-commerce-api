@@ -13,19 +13,6 @@ class UserService {
     return user;
   }
 
-  async loginUser(email, password){
-    const user = await prisma.user.findUnique({
-        where: {email}
-    })
-    if (!user) return null 
-
-    const passwordMatch = bcrypt.compareSync(password, user.password)
-
-    if (!passwordMatch) return null
-    
-    return user
-  }
-
 
   async verifyEmailExists(email) {
     const user = await prisma.user.findUnique({
@@ -41,6 +28,22 @@ class UserService {
         data,
     });
     return updatedUser;
+  }
+
+  async updatePassword(id, newPassword) {
+    const updatedUser = await prisma.user.update({
+        where: {id},
+        data: {password: newPassword}
+    })
+
+    return updatedUser
+  }
+
+  async findUserById(id) {
+    const user = await prisma.user.findUnique({
+        where: {id}
+    })
+    return user
   }
 }
 

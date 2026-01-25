@@ -48,9 +48,15 @@ class UserController {
   async LoginUser(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await userService.loginUser(email, password);
+
+      const user = await userService.verifyEmailExists(email);
 
       if (!user)
+        return res.status(401).json({ error: "Email or password incorrect" });
+
+      const validPassword = await bcrypt.compare(password, user.password);
+
+      if (!validPassword)
         return res.status(401).json({ error: "Email or password incorrect" });
 
       const payload = {
@@ -71,14 +77,7 @@ class UserController {
 
   async updateUser(req, res) {
     try {
-      const rawHeader = req.headers.authorization || "";
-      const authHeader = rawHeader.includes(" ")
-        ? rawHeader.split(" ")[1]
-        : rawHeader;
-      if (!authHeader) return res.status(401).json({ error: "No token provided" });
-
-      const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
-      const userId = decoded.id;
+      const userId = req.user.id;
 
       const { name, email } = req.body;
 
@@ -90,6 +89,40 @@ class UserController {
         email: updatedUser.email,
         role: updatedUser.role,
       });
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
+  async updatePassword(req, res) {
+    try {
+      const userId = req.user.id;
+
+      const { oldPassword, newPassword } = req.body;
+
+      if (!oldPassword || !newPassword) {
+        return res
+          .status(400)
+          .json({ error: "Old password and new password are required" });
+      }
+
+      if (newPassword.length < 6)
+        return res
+          .status(400)
+          .json({ error: "Password must be at least 6 characters long" });
+
+      const user = await userService.findUserById(userId);
+
+      if (user) {
+        const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if (!passwordMatch) {
+          return res.status(401).json({ error: "Old password is incorrect" });
+        }
+        const hashedNewPassword = bcrypt.hashSync(newPassword, 10);
+        await userService.updatePassword(userId, hashedNewPassword);
+        return res.json({ message: "Password updated successfully" });
+      }
     } catch (e) {
       return res.status(500).json({ error: e.message });
     }
