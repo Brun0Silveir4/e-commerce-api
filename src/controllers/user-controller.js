@@ -69,7 +69,7 @@ class UserController {
         expiresIn: "3h",
       });
 
-      return res.json({ user: payload, token });
+      return res.status(200).json({ user: payload, token });
     } catch (e) {
       return res.status(500).json({ error: e.message });
     }
@@ -121,7 +121,7 @@ class UserController {
         }
         const hashedNewPassword = bcrypt.hashSync(newPassword, 10);
         await userService.updatePassword(userId, hashedNewPassword);
-        return res.json({ message: "Password updated successfully" });
+        return res.status(200).json({ message: "Password updated successfully" });
       }
     } catch (e) {
       return res.status(500).json({ error: e.message });
