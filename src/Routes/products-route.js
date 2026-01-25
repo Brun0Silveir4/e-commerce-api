@@ -13,6 +13,7 @@ router.post('/', ensureAuth, ensureAdmin, ProductController.createProduct)
 
 router.get('/:id', ensureAuth, ProductController.getProductById);
 router.put('/:id', ensureAuth, ensureAdmin, ProductController.updateProduct)
+router.delete('/:id', ensureAuth, ensureAdmin, ProductController.deleteProduct)
 
 
 

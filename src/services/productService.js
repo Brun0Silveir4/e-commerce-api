@@ -50,6 +50,12 @@ class ProductService {
         })
         return updatedProduct
     }
+
+    async deleteProduct(id){
+        await prisma.product.delete({
+            where: {id}
+        })
+    }
 }
 
 module.exports = new ProductService();
