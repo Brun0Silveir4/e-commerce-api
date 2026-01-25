@@ -35,6 +35,13 @@ class ProductService {
         return product
 
     }
+
+    async createProduct(data){
+        const newProduct = await prisma.product.create({
+            data
+        })
+        return newProduct
+    }
 }
 
 module.exports = new ProductService();

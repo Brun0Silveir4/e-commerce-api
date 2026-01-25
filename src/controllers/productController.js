@@ -36,6 +36,28 @@ class ProductController {
       return res.status(500).json({ error: e.message });
     }
   }
+
+  async createProduct(req, res) {
+    try{
+
+      const { name, description, price, stock } = req.body; 
+
+      if (!name || !description || price == null || stock == null) {
+        return res.status(400).json({ error: "All fields are required." });
+      }
+
+      const newProduct = await ProductService.createProduct({
+        name,
+        description,
+        price,
+        stock
+      });
+      return res.status(201).json(newProduct);
+
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
 }
 
 module.exports = new ProductController();
