@@ -42,6 +42,14 @@ class ProductService {
         })
         return newProduct
     }
+
+    async updateProduct(id, data){
+        const updatedProduct = await prisma.product.update({
+            where: {id},
+            data
+        })
+        return updatedProduct
+    }
 }
 
 module.exports = new ProductService();

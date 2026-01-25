@@ -10,7 +10,9 @@ const ProductController = require('../controllers/productController');
 router.get('/', ensureAuth, ProductController.getAllProducts);
 router.post('/', ensureAuth, ensureAdmin, ProductController.createProduct);
 router.post('/', ensureAuth, ensureAdmin, ProductController.createProduct)
+
 router.get('/:id', ensureAuth, ProductController.getProductById);
+router.put('/:id', ensureAuth, ensureAdmin, ProductController.updateProduct)
 
 
 
