@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router();
 
 const ensureAuth = require('../middlewares/ensureAuth');
-const ensureAdmin = require('../middlewares/EnsureAdmin')
+const ensureAdmin = require('../middlewares/ensureAdmin')
 
 const ProductController = require('../controllers/productController');
 

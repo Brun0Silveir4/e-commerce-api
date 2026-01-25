@@ -3,6 +3,7 @@ const express = require('express')
 const authRoutes = require('./Routes/login-route')
 const productRoutes = require('./Routes/products-route')
 const orderRoutes = require('./Routes/order-route')
+const port = process.env.PORT || 3000
 
 const app = express()
 
@@ -12,4 +13,4 @@ app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/orders', orderRoutes)
 
-app.listen(8080, () => console.log('Server running on port 8080'))
+app.listen(port, () => console.log(`Server running on port ${port}`))
