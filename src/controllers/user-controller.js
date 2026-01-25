@@ -68,6 +68,32 @@ class UserController {
       return res.status(500).json({ error: e.message });
     }
   }
+
+  async updateUser(req, res) {
+    try {
+      const rawHeader = req.headers.authorization || "";
+      const authHeader = rawHeader.includes(" ")
+        ? rawHeader.split(" ")[1]
+        : rawHeader;
+      if (!authHeader) return res.status(401).json({ error: "No token provided" });
+
+      const decoded = jwt.verify(authHeader, process.env.JWT_SECRET);
+      const userId = decoded.id;
+
+      const { name, email } = req.body;
+
+      const updatedUser = await userService.updateUser(userId, { name, email });
+
+      return res.json({
+        id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      });
+    } catch (e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
 }
 
 module.exports = new UserController();
