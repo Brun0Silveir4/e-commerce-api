@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const OrderController = require('../controllers/orderController');
-const ensureAuth = require('../middlewares/EnsureAuth'); 
+const ensureAuth = require('../middlewares/ensureAuth')
 
 router.get('/me', ensureAuth, OrderController.getAllOrders)
 router.post('/newOrder', ensureAuth, OrderController.createOrder)

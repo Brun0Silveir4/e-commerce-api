@@ -46,7 +46,7 @@ cd e-commerce-api
 ### 2. Configure as variáveis de ambiente
 Crie um arquivo `.env` na raiz do projeto e defina as seguintes variáveis
 ```bash
-DATABASE_URL="postgresql://postgres:postgres@db:5433/ecommerce"
+DATABASE_URL="postgresql://postgres:postgres@db:5432/ecommerce"
 JWT_SECRET="fb8dbd0b4631121589b17818472bdf07069527e8e1362762a6d1ca9da6ad1b05"
 PORT=3000
 ```
