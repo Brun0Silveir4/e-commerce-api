@@ -19,6 +19,7 @@ A API oferece autenticação, controle de permissões (admin/customer) e gerenci
 - Docker & Docker Compose
 - JWT para autenticação
 - OpenAPI (Swagger)
+- Jest para testes unitários
 
 <br>
 
